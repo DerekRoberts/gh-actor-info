@@ -30,5 +30,8 @@
   "homepage": "https://github.com/DerekRoberts/gh-author-info#readme",
   "engines": {
     "node": ">=14"
+  },
+  "dependencies": {
+    "typescipt": "^1.0.0"
   }
 }
