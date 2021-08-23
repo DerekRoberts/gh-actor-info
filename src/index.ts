@@ -1,8 +1,8 @@
-let ghActor: string = process.argv[2] || ''
+const ghActor: string = process.argv[2] || '';
 
-if(!ghActor) {
-  console.error('Please provide a username')
-  process.exit(1)
+if (!ghActor) {
+  console.error('Please provide a username');
+  process.exit(1);
 }
 
 interface User {
@@ -14,7 +14,7 @@ interface User {
 const user: User = {
   actor: ghActor,
   email: 'first.last@gov.bc.ca',
-  name: 'First Last'
-}
+  name: 'First Last',
+};
 
-console.log(user)
+console.log(user);
