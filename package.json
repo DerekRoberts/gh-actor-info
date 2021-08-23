@@ -4,6 +4,7 @@
   "description": "Name and email address from GitHub username (GHActions actor)",
   "main": "lib/index.js",
   "scripts": {
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "watch": "tsc-watch --onSuccess \"node lib/index.js $npm_config_username\"",
     "watch:example": "tsc-watch --onSuccess \"npm run watch:index --username=octocat\""
   },
@@ -42,7 +43,10 @@
     "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.1",
+    "eslint-plugin-prettier": "^3.4.1",
+    "prettier": "^2.3.2",
     "typescript": "^4.3.5",
     "typescript-tslint-plugin": "^1.0.1"
   }
