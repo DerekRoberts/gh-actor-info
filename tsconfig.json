@@ -7,6 +7,9 @@
     "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "outDir": "lib",
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ],
     "rootDir": "src",
     "sourceMap": true,
     "strict": true,

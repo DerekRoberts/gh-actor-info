@@ -2,7 +2,7 @@
   "name": "gh-author-info",
   "version": "0.0.1",
   "description": "Name and email address from GitHub username (GHActions actor)",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "test"
   },
@@ -33,5 +33,9 @@
   },
   "dependencies": {
     "typescipt": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.5",
+    "typescript-tslint-plugin": "^1.0.1"
   }
 }
