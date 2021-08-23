@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 const ghActor: string = process.argv[2] || '';
 
 if (!ghActor) {
-  console.error('Please provide a username');
+  console.error('\nPlease provide a username');
+  console.error(' e.g.: ./lib/index.js --username=octocat');
   process.exit(1);
 }
 

@@ -4,7 +4,8 @@
   "description": "Name and email address from GitHub username (GHActions actor)",
   "main": "lib/index.js",
   "scripts": {
-    "test": "test"
+    "watch": "tsc-watch --onSuccess \"node lib/index.js $npm_config_username\"",
+    "watch:example": "tsc-watch --onSuccess \"npm run watch:index --username=octocat\""
   },
   "repository": {
     "type": "git",
