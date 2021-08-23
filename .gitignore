@@ -1,3 +1,8 @@
+# Repo-specific
+/dist
+/lib
+/tmp
+
 # Logs
 logs
 *.log
