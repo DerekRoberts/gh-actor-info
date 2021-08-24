@@ -1,22 +1,34 @@
 /* eslint-disable no-console */
-const ghActor: string = process.argv[2] || '';
 
+// Axios client
+import axios from 'axios';
+
+// Verify input
+const ghActor: string = process.argv[2] || '';
 if (!ghActor) {
   console.error('\nPlease provide a username');
   console.error(' e.g.: ./lib/index.js --username=octocat');
   process.exit(1);
 }
 
+// User interface
 interface User {
   actor: string;
   email: string;
   name: string;
 }
 
-const user: User = {
-  actor: ghActor,
-  email: 'first.last@gov.bc.ca',
-  name: 'First Last',
-};
-
-console.log(user);
+// Unauthenticated GitHub API call
+axios
+  .get(`https://api.github.com/users/${ghActor}`)
+  .then(function (response) {
+    const user: User = {
+      actor: ghActor,
+      email: response.data.email,
+      name: response.data.name,
+    };
+    console.log(user);
+  })
+  .catch(function (error) {
+    console.log(error.response.headers);
+  });
