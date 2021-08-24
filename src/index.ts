@@ -18,16 +18,18 @@ interface User {
   name: string;
 }
 
+// Create user from instance
+const user: User = {
+  actor: ghActor,
+  email: '',
+  name: '',
+};
+
 // Unauthenticated GitHub API call
 axios
   .get(`https://api.github.com/users/${ghActor}`)
   .then(function (response) {
-    // Create user from instance
-    const user: User = {
-      actor: ghActor,
-      email: response.data.email,
-      name: response.data.name,
-    };
+    (user.email = response.data.email), (user.name = response.data.name);
     console.log(user);
   })
   .catch(function (error) {
@@ -35,3 +37,5 @@ axios
     console.log(error.response.statusText);
     console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
   });
+
+console.log(user);
