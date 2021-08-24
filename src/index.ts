@@ -22,6 +22,7 @@ interface User {
 axios
   .get(`https://api.github.com/users/${ghActor}`)
   .then(function (response) {
+    // Create user from instance
     const user: User = {
       actor: ghActor,
       email: response.data.email,
@@ -30,5 +31,7 @@ axios
     console.log(user);
   })
   .catch(function (error) {
-    console.log(error.response.headers);
+    console.log(error.response.status);
+    console.log(error.response.statusText);
+    console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
   });
