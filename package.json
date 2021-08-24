@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "watch": "tsc-watch --onSuccess \"node lib/index.js $npm_config_username\"",
-    "watch:example": "tsc-watch --onSuccess \"npm run watch:index --username=octocat\""
+    "watch:example": "tsc-watch --onSuccess \"npm run watch --username=octocat\""
   },
   "repository": {
     "type": "git",
