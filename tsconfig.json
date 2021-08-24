@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig.json to read more about this file */
-
     "composite": true,
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
     "outDir": "lib",
     "plugins": [
       { "name": "typescript-tslint-plugin" }
@@ -13,8 +11,12 @@
     "rootDir": "src",
     "sourceMap": true,
     "strict": true,
-    "target": "es6"
+    "target": "es2017"
   },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
   "include": [
     "src/**/*"
   ]
