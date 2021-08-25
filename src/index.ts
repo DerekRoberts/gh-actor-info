@@ -13,19 +13,17 @@ if (!ghActor) {
 
 // User interface
 interface User {
-  actor: string;
   email: string;
   name: string;
 }
 
 // Create user from instance
 const user: User = {
-  actor: ghActor,
   email: '',
   name: '',
 };
 
-// Unauthenticated GitHub API call
+// Unauthenticated GitHub API call for public info
 export async function getPublicInfo(actor: string): Promise<User> {
   await axios
     .get(`https://api.github.com/users/${actor}`)
@@ -39,4 +37,18 @@ export async function getPublicInfo(actor: string): Promise<User> {
   return user;
 }
 
-console.log(await getPublicInfo(ghActor));
+// Scrub public events - useful if email not published
+export async function getCommitAuthor(actor: string): Promise<User> {
+  return axios
+    .get(`https://api.github.com/users/${actor}/events/public`)
+    .then(function (response) {
+      const userObj = response.data[0].payload.commits[0].author;
+      return userObj;
+    })
+    .catch(function (error) {
+      throw new Error(error.response.header);
+    });
+}
+
+// console.log(await getPublicInfo(ghActor));
+console.log(await getCommitAuthor(ghActor));
