@@ -2,10 +2,10 @@
   "name": "gh-author-info",
   "version": "0.0.1",
   "description": "Name and email address from GitHub username (GHActions actor)",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "watch": "tsc-watch --onSuccess \"node --harmony-top-level-await ./lib/index.js $npm_config_username\"",
+    "watch": "tsc-watch --onSuccess \"node --harmony-top-level-await ./dist/index.js $npm_config_username\"",
     "watch:example": "tsc-watch --onSuccess \"npm run watch --username=octocat\""
   },
   "repository": {

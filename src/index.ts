@@ -6,7 +6,7 @@ import axios from 'axios';
 const ghActor: string = process.argv[2] || '';
 if (!ghActor) {
   console.error('\nPlease provide a username');
-  console.error(' e.g.: ./lib/index.js --username=octocat');
+  console.error(' e.g.: ./dist/index.js --username=octocat');
   process.exit(1);
 }
 
