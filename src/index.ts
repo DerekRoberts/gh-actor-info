@@ -26,16 +26,17 @@ const user: User = {
 };
 
 // Unauthenticated GitHub API call
-axios
-  .get(`https://api.github.com/users/${ghActor}`)
-  .then(function (response) {
-    (user.email = response.data.email), (user.name = response.data.name);
-    console.log(user);
-  })
-  .catch(function (error) {
-    console.log(error.response.status);
-    console.log(error.response.statusText);
-    console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
-  });
+export async function getPublicInfo(actor: string): Promise<User> {
+  await axios
+    .get(`https://api.github.com/users/${actor}`)
+    .then(function (response) {
+      (user.email = response.data.email), (user.name = response.data.name);
+    })
+    .catch(function (error) {
+      console.log(error.response.status, '-', error.response.statusText);
+      console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
+    });
+  return user;
+}
 
-console.log(user);
+console.log(await getPublicInfo(ghActor));
