@@ -4,6 +4,7 @@
   "description": "Name and email address from GitHub username (GHActions actor)",
   "main": "dist/index.js",
   "scripts": {
+    "build": "./node_modules/.bin/tsc -b",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "watch": "tsc-watch --onSuccess \"node --harmony-top-level-await ./dist/index.js $npm_config_username\"",
     "watch:example": "tsc-watch --onSuccess \"npm run watch --username=octocat\""
