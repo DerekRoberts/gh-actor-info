@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 // Axios client
 import axios from 'axios';
 
@@ -24,31 +23,38 @@ const user: User = {
 };
 
 // Unauthenticated GitHub API call for public info
-export async function getPublicInfo(actor: string): Promise<User> {
+export async function getFromPublished(actor: string): Promise<User> {
   await axios
     .get(`https://api.github.com/users/${actor}`)
-    .then(function (response) {
-      (user.email = response.data.email), (user.name = response.data.name);
+    .then((response) => {
+      user.email = response.data.email;
+      user.name = response.data.name;
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error.response.status, '-', error.response.statusText);
       console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
     });
   return user;
 }
 
-// Scrub public events - useful if email not published
-export async function getCommitAuthor(actor: string): Promise<User> {
-  return axios
+// Unauthenticated GitHub API call for public commits
+export async function getFromCommits(actor: string): Promise<User> {
+  await axios
     .get(`https://api.github.com/users/${actor}/events/public`)
-    .then(function (response) {
-      const userObj = response.data[0].payload.commits[0].author;
-      return userObj;
+    .then((response) => {
+      if (response?.data[0]?.payload?.commits[0]?.author) {
+        user.email = response.data[0].payload.commits[0].author.email;
+        user.name = response.data[0].payload.commits[0].author.name;
+      } else {
+        console.log(`No commits found for user ${actor}`);
+      }
     })
-    .catch(function (error) {
-      throw new Error(error.response.header);
+    .catch((error) => {
+      console.log(error.response.status, '-', error.response.statusText);
+      console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
     });
+  return user;
 }
 
-// console.log(await getPublicInfo(ghActor));
-console.log(await getCommitAuthor(ghActor));
+// console.log(await getFromPublished(ghActor));
+console.log(await getFromCommits(ghActor));
