@@ -1,17 +1,11 @@
 {
   "compilerOptions": {
-    "composite": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
     "outDir": "dist",
-    "plugins": [
-      { "name": "typescript-tslint-plugin" }
-    ],
-    "rootDir": "src",
-    "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "target": "es2018"
   },
   "exclude": [
     "dist",
