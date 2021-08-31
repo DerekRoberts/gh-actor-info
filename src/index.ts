@@ -16,6 +16,23 @@ interface User {
   name: string;
 }
 
+// Error handler
+interface errorResponse {
+  response: Record<string, unknown>;
+}
+const link403 = 'https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting';
+function errorOr403(error: errorResponse): User {
+  if (error?.response?.status === '403') {
+    console.error(`403 - ${link403}`);
+    return {
+      email: '',
+      name: '',
+    } as User;
+  } else {
+    throw new Error(JSON.stringify(error));
+  }
+}
+
 // Unauthenticated GitHub API call for public info
 export async function getFromPublished(actor: string): Promise<User> {
   return await axios
@@ -27,9 +44,7 @@ export async function getFromPublished(actor: string): Promise<User> {
       } as User;
     })
     .catch((error) => {
-      console.log(error?.response?.status, '-', error?.response?.statusText);
-      console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
-      throw new Error(error);
+      return errorOr403(error) as User;
     });
 }
 
@@ -55,9 +70,7 @@ export async function getFromCommits(actor: string): Promise<User> {
       }
     })
     .catch((error) => {
-      console.log(error?.response?.status, '-', error?.response?.statusText);
-      console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
-      throw new Error(error);
+      return errorOr403(error) as User;
     });
 }
 
