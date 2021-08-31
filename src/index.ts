@@ -31,7 +31,7 @@ export async function getFromPublished(actor: string): Promise<User> {
       user.name = response.data.name;
     })
     .catch((error) => {
-      console.log(error.response.status, '-', error.response.statusText);
+      console.log(error?.response?.status, '-', error?.response?.statusText);
       console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
     });
   return user;
@@ -42,15 +42,22 @@ export async function getFromCommits(actor: string): Promise<User> {
   await axios
     .get(`https://api.github.com/users/${actor}/events/public`)
     .then((response) => {
-      if (response?.data[0]?.payload?.commits[0]?.author) {
-        user.email = response.data[0].payload.commits[0].author.email;
-        user.name = response.data[0].payload.commits[0].author.name;
+      const filt = response.data
+        .filter(function (f: Record<string, unknown>) {
+          return f.type === 'PushEvent';
+        })
+        .map(function (m: Record<string, Record<string, Record<string, unknown>[]>>) {
+          return m.payload?.commits[0]?.author;
+        });
+      if (filt[0]) {
+        user.email = filt[0].email;
+        user.name = filt[0].name;
       } else {
         return getFromPublished(actor);
       }
     })
     .catch((error) => {
-      console.log(error.response.status, '-', error.response.statusText);
+      console.log(error?.response?.status, '-', error?.response?.statusText);
       console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
     });
   return user;
