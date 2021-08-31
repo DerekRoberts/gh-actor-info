@@ -16,30 +16,26 @@ interface User {
   name: string;
 }
 
-// Create user from instance
-const user: User = {
-  email: '',
-  name: '',
-};
-
 // Unauthenticated GitHub API call for public info
 export async function getFromPublished(actor: string): Promise<User> {
-  await axios
+  return await axios
     .get(`https://api.github.com/users/${actor}`)
     .then((response) => {
-      user.email = response.data.email || '';
-      user.name = response.data.name;
+      return {
+        email: response.data.email || '',
+        name: response.data.name,
+      } as User;
     })
     .catch((error) => {
       console.log(error?.response?.status, '-', error?.response?.statusText);
       console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
+      throw new Error(error);
     });
-  return user;
 }
 
 // Unauthenticated GitHub API call for public commits
 export async function getFromCommits(actor: string): Promise<User> {
-  await axios
+  return await axios
     .get(`https://api.github.com/users/${actor}/events/public`)
     .then((response) => {
       const filt = response.data
@@ -50,8 +46,10 @@ export async function getFromCommits(actor: string): Promise<User> {
           return m.payload?.commits[0]?.author;
         });
       if (filt[0]) {
-        user.email = filt[0].email;
-        user.name = filt[0].name;
+        return {
+          email: filt[0].email || '',
+          name: filt[0].name,
+        } as User;
       } else {
         return getFromPublished(actor);
       }
@@ -59,8 +57,8 @@ export async function getFromCommits(actor: string): Promise<User> {
     .catch((error) => {
       console.log(error?.response?.status, '-', error?.response?.statusText);
       console.log('https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting');
+      throw new Error(error);
     });
-  return user;
 }
 
 console.log(JSON.stringify(await getFromCommits(ghActor)));
