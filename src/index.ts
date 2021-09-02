@@ -1,14 +1,5 @@
-/* eslint-disable no-console */
-// Axios client
+// Axios
 import axios from 'axios';
-
-// Verify input
-const ghActor: string = process.argv[2] || '';
-if (!ghActor) {
-  console.error('\nPlease provide a username');
-  console.error(' e.g.: ./dist/index.js octocat');
-  process.exit(1);
-}
 
 // User interface
 interface User {
@@ -16,18 +7,19 @@ interface User {
   name: string;
 }
 
-// Error handler
-interface errorResponse {
-  response: Record<string, unknown>;
+function user(name?: string, email?: string): User {
+  return {
+    name: name || '',
+    email: email || '',
+  } as User;
 }
-const link403 = 'https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting';
-function errorOr403(error: errorResponse): User {
+
+// Error handler
+function errorOr403(error: Record<string, Record<string, unknown>>): User {
+  const link403 = 'https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting';
   if (error?.response?.status === '403') {
     console.error(`403 - ${link403}`);
-    return {
-      email: '',
-      name: '',
-    } as User;
+    return user();
   } else {
     throw new Error(JSON.stringify(error));
   }
@@ -38,13 +30,10 @@ export async function getFromPublished(actor: string): Promise<User> {
   return await axios
     .get(`https://api.github.com/users/${actor}`)
     .then((response) => {
-      return {
-        email: response.data.email || '',
-        name: response.data.name,
-      } as User;
+      return user(response.data.name, response.data.user);
     })
     .catch((error) => {
-      return errorOr403(error) as User;
+      return errorOr403(error);
     });
 }
 
@@ -61,10 +50,7 @@ export async function getFromCommits(actor: string): Promise<User> {
           return m.payload?.commits[0]?.author;
         });
       if (filt[0]) {
-        return {
-          email: filt[0].email || '',
-          name: filt[0].name,
-        } as User;
+        return user(filt[0].name, filt[0].email);
       } else {
         return getFromPublished(actor);
       }
@@ -73,5 +59,3 @@ export async function getFromCommits(actor: string): Promise<User> {
       return errorOr403(error) as User;
     });
 }
-
-console.log(JSON.stringify(await getFromCommits(ghActor)));
