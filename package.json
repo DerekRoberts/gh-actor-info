@@ -1,5 +1,5 @@
 {
-  "name": "gh-author-info",
+  "name": "github-actor-info",
   "version": "0.0.1",
   "description": "Name and email address from GitHub username (GHActions actor)",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DerekRoberts/gh-author-info.git"
+    "url": "git+https://github.com/DerekRoberts/github-actor-info.git"
   },
   "keywords": [
     "cli",
@@ -28,9 +28,9 @@
   },
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/DerekRoberts/gh-author-info/issues"
+    "url": "https://github.com/DerekRoberts/github-actor-info/issues"
   },
-  "homepage": "https://github.com/DerekRoberts/gh-author-info#readme",
+  "homepage": "https://github.com/DerekRoberts/github-actor-info#readme",
   "engines": {
     "node": ">=14"
   },
