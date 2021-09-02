@@ -1,8 +1,8 @@
 {
   "name": "github-actor-info",
-  "version": "0.0.1",
+  "version": "0.0.0-rc1",
   "description": "Name and email address from GitHub username (GHActions actor)",
-  "main": "dist/index.js",
+  "main": "dist/cli.js",
   "scripts": {
     "build": "./node_modules/.bin/tsc -b",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
