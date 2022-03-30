@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "axios": "^0.26.0",
+    "minimist": "^1.2.6",
     "tsc-watch": "^4.6.0",
     "typescipt": "^1.0.0"
   },
